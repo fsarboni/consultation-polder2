@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultation Polder - Recours Juridique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .urgent-banner {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .form-content {
+            padding: 40px;
+        }
+        
+        .context-box {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .security-notice {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .security-notice strong {
+            color: #27ae60;
+        }
+        
+        .context-box h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .context-box ul {
+            margin-left: 20px;
+        }
+        
+        .context-box li {
+            margin-bottom: 8px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        input[type="text"], input[type="email"], textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+        
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .vote-section {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .vote-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .vote-question {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .radio-option:hover {
+            border-color: #3498db;
+            background: #f8f9fa;
+        }
+        
+        .radio-option.selected {
+            border-color: #27ae60;
+            background: #d4edda;
+        }
+        
+        .radio-option.selected.non {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        .radio-option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        .submit-button {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+        }
+        
+        .submit-button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .submit-button:active {
+            transform: translateY(0);
+        }
+        
+        .legal-notice {
+            background: #e8f5e8;
+            border: 1px solid #c3e6c3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #2d5a2d;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .form-content {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+        }
+        
+        .confirmation-message {
+            display: none;
+            background: #d4edda;
+            border: 2px solid #27ae60;
+            color: #155724;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .confirmation-message h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .confirmation-details {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏛️ Association Polder</h1>
+            <p>Consultation officielle des adhérents</p>
+        </div>
+        
+        <div class="urgent-banner">
+            ⚠️ CONSULTATION LÉGALE OBLIGATOIRE - RÉPONSE REQUISE
+        </div>
+        
+        <div class="form-content">
+            <div class="security-notice">
+                <strong>🔒 Vote sécurisé :</strong> Votre vote sera automatiquement enregistré et vous recevrez une confirmation par e-mail avec votre numéro de vote.
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            
+            <div class="context-box">
+                <h3>📋 Contexte de la consultation</h3>
+                <p><strong>Problème :</strong> Notre installation d'assainissement collectif présente de nombreuses malfaçons qui perturbent gravement son fonctionnement.</p>
+                <br>
+                <p><strong>Solution proposée :</strong> Notre avocat (via notre assistance juridique Groupama) recommande d'engager un recours en justice contre la société responsable.</p>
+                <br>
+                <p><strong>Démarche juridique :</strong></p>
+                <ul>
+                    <li>Saisine du juge en référé pour désignation d'un expert</li>
+                    <li>Expertise technique officielle des malfaçons</li>
+                    <li>Engagement d'une procédure de réparation du préjudice</li>
+                </ul>
+            </div>
+            
+            <form id="consultationForm">
+                <div class="form-group">
+                    <label for="nom">Nom et Prénom <span class="required">*</span></label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Votre adresse e-mail <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                    <small style="color: #666;">Pour confirmation de votre vote</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="adherent">Numéro d'adhérent (si connu)</label>
+                    <input type="text" id="adherent" name="adherent" placeholder="Optionnel">
+                </div>
+                
+                <div class="vote-section">
+                    <div class="vote-title">🗳️ VOTRE VOTE</div>
+                    <div class="vote-question">
+                        Autorisez-vous le Bureau de l'association Polder à engager une procédure judiciaire contre la société responsable de notre assainissement collectif ?
+                    </div>
+                    
+                    <div class="radio-group">
+                        <div class="radio-option" onclick="selectOption('oui')">
+                            <input type="radio" id="vote_oui" name="vote" value="oui" required>
+                            <label for="vote_oui">✅ OUI - J'autorise cette procédure juridique</label>
+                        </div>
+                        
+                        <div class="radio-option" onclick="selectOption('non')">
+                            <input type="radio" id="vote_non" name="vote" value="non" required>
+                            <label for="vote_non">❌ NON - Je m'oppose à cette procédure juridique</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="commentaires">Commentaires ou observations (optionnel)</label>
+                    <textarea id="commentaires" name="commentaires" rows="4" placeholder="Vos remarques sur cette démarche..."></textarea>
+                </div>
+                
+                <div class="legal-notice">
+                    <strong>📢 Information légale :</strong> Cette consultation est obligatoire selon nos statuts. Votre vote sera comptabilisé pour la majorité légale requise.
+                </div>
+                
+                <button type="submit" class="submit-button" id="submitBtn">
+                    🗳️ ENREGISTRER MON VOTE
+                </button>
+                
+                <div class="loading" id="loadingMessage">
+                    <div class="spinner"></div>
+                    <p>Enregistrement de votre vote en cours...</p>
+                </div>
+                
+                <div class="error-message" id="errorMessage">
+                    <strong>❌ Erreur :</strong> <span id="errorText"></span>
+                </div>
+                
+                <div class="confirmation-message" id="confirmationMessage">
+                    <h3>✅ Vote enregistré avec succès !</h3>
+                    <div class="confirmation-details">
+                        <p><strong>📧 Confirmation envoyée</strong> à votre adresse e-mail</p>
+                        <p><strong>🗳️ Votre vote :</strong> <span id="voteResult"></span></p>
+                        <p><strong>📅 Date et heure :</strong> <span id="voteDate"></span></p>
+                        <p><strong>🔢 Numéro de confirmation :</strong> <span id="confirmationNumber"></span></p>
+                        <p><strong>🆔 Identité :</strong> <span id="voterName"></span></p>
+                    </div>
+                    <p><em>⚖️ Ce vote est juridiquement contraignant selon nos statuts associatifs.</em></p>
+                    <p><strong>Important :</strong> Conservez votre e-mail de confirmation comme preuve de vote.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function selectOption(choice) {
+            const options = document.querySelectorAll('.radio-option');
+            options.forEach(opt => opt.classList.remove('selected', 'non'));
+            
+            const selectedOption = document.querySelector(`#vote_${choice}`).closest('.radio-option');
+            selectedOption.classList.add('selected');
+            
+            if (choice === 'non') {
+                selectedOption.classList.add('non');
+            }
+            
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            const form = document.getElementById('consultationForm');
+            const inputs = form.querySelectorAll('input[required], input[name="vote"]');
+            let filled = 0;
+            
+            inputs.forEach(input => {
+                if (input.type === 'radio') {
+                    if (form.querySelector('input[name="vote"]:checked')) {
+                        filled++;
+                    }
+                } else if (input.value.trim() !== '') {
+                    filled++;
+                }
+            });
+            
+            const progress = (filled / 3) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        function generateConfirmationNumber() {
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(-2);
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            
+            return `POLDER-${year}${month}${day}-${hours}${minutes}-${random}`;
+        }
+        
+        async function sendToGoogleSheets(data) {
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4-xCgjcS7oZW-4hu2ZkWyLzq7m5W5J479vBpZwdSZ4NOJOoP9l2er4yws8PzVdRN76Q/exec';
+            
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Erreur de sauvegarde');
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Erreur:', error);
+                throw error;
+            }
+        }
+        
+        document.querySelectorAll('input[required]').forEach(input => {
+            input.addEventListener('input', updateProgress);
+        });
+        
+        document.getElementById('consultationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingMsg = document.getElementById('loadingMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            submitBtn.disabled = true;
+            loadingMsg.style.display = 'block';
+            errorMsg.style.display = 'none';
+            
+            try {
+                const formData = new FormData(this);
+                const confirmationNumber = generateConfirmationNumber();
+                const timestamp = new Date().toISOString();
+                
+                const voteData = {
+                    confirmationNumber: confirmationNumber,
+                    timestamp: timestamp,
+                    nom: formData.get('nom'),
+                    email: formData.get('email'),
+                    adherent: formData.get('adherent') || 'Non renseigné',
+                    vote: formData.get('vote'),
+                    commentaires: formData.get('commentaires') || '',
+                    clientIP: 'IP-GITHUB-PAGES',
+                    userAgent: navigator.userAgent
+                };
+                
+                console.log('Données à sauvegarder:', voteData);
+                await sendToGoogleSheets(voteData);
+                
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                document.getElementById('voteResult').textContent = voteData.vote.toUpperCase();
+                document.getElementById('voteDate').textContent = new Date(timestamp).toLocaleString('fr-FR');
+                document.getElementById('confirmationNumber').textContent = confirmationNumber;
+                document.getElementById('voterName').textContent = voteData.nom;
+                
+                loadingMsg.style.display = 'none';
+                this.style.display = 'none';
+                document.getElementById('confirmationMessage').style.display = 'block';
+                
+                document.getElementById('confirmationMessage').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'enregistrement:', error);
+                
+                loadingMsg.style.display = 'none';
+                document.getElementById('errorText').textContent = 'Impossible d\'enregistrer votre vote. Veuillez réessayer ou nous contacter.';
+                errorMsg.style.display = 'block';
+                
+                submitBtn.disabled = false;
+            }
+        });
+        
+        updateProgress();
+        
+        window.addEventListener('beforeunload', function(e) {
+            const form = document.getElementById('consultationForm');
+            if (form.style.display !== 'none') {
+                const confirmationMsg = 'Êtes-vous sûr de vouloir quitter ? Votre vote ne sera pas enregistré.';
+                e.returnValue = confirmationMsg;
+                return confirmationMsg;
+            }
+        });
+    </script>
+</body>
+</html> 
