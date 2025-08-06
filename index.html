@@ -462,7 +462,7 @@
                 }
             });
             
-            const progress = (filled / 3) * 100;
+            const progress = (filled / 5) * 100;
             document.getElementById('progressBar').style.width = progress + '%';
         }
         
@@ -522,17 +522,18 @@
                 const confirmationNumber = generateConfirmationNumber();
                 const timestamp = new Date().toISOString();
                 
-                const voteData = {
-                    confirmationNumber: confirmationNumber,
-                    timestamp: timestamp,
-                    nom: formData.get('nom'),
-                    email: formData.get('email'),
-                    adherent: formData.get('adherent') || 'Non renseigné',
-                    vote: formData.get('vote'),
-                    commentaires: formData.get('commentaires') || '',
-                    clientIP: 'IP-GITHUB-PAGES',
-                    userAgent: navigator.userAgent
-                };
+               const voteData = {
+    confirmationNumber: confirmationNumber,
+    timestamp: timestamp,
+    nom: formData.get('nom'),
+    prenom: formData.get('prenom'),
+    adresse: formData.get('adresse'),
+    email: formData.get('email'),
+    vote: formData.get('vote'),
+    commentaires: formData.get('commentaires') || '',
+    clientIP: 'IP-GITHUB-PAGES',
+    userAgent: navigator.userAgent
+};
                 
                 console.log('Données à sauvegarder:', voteData);
                 await sendToGoogleSheets(voteData);
