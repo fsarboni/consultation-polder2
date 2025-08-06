@@ -354,9 +354,19 @@
             
             <form id="consultationForm">
                 <div class="form-group">
-                    <label for="nom">Nom et Prénom <span class="required">*</span></label>
-                    <input type="text" id="nom" name="nom" required>
-                </div>
+    <label for="nom">Nom de famille <span class="required">*</span></label>
+    <input type="text" id="nom" name="nom" required>
+</div>
+
+<div class="form-group">
+    <label for="prenom">Prénom <span class="required">*</span></label>
+    <input type="text" id="prenom" name="prenom" required>
+</div>
+
+<div class="form-group">
+    <label for="adresse">Adresse sur le polder <span class="required">*</span></label>
+    <input type="text" id="adresse" name="adresse" required placeholder="Votre adresse dans le lotissement">
+</div>
                 
                 <div class="form-group">
                     <label for="email">Votre adresse e-mail <span class="required">*</span></label>
@@ -364,10 +374,6 @@
                     <small style="color: #666;">Pour confirmation de votre vote</small>
                 </div>
                 
-                <div class="form-group">
-                    <label for="adherent">Numéro d'adhérent (si connu)</label>
-                    <input type="text" id="adherent" name="adherent" placeholder="Optionnel">
-                </div>
                 
                 <div class="vote-section">
                     <div class="vote-title">🗳️ VOTRE VOTE</div>
