@@ -317,6 +317,7 @@
             margin-top: 15px;
         }
     </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -478,8 +479,25 @@
             return `POLDER-${year}${month}${day}-${hours}${minutes}-${random}`;
         }
         
-        async function sendToGoogleSheets(data) {
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4-xCgjcS7oZW-4hu2ZkWyLzq7m5W5J479vBpZwdSZ4NOJOoP9l2er4yws8PzVdRN76Q/exec';
+        async function sendVoteEmail(data) {
+    // Initialiser EmailJS
+    emailjs.init('RiWi2d1PITxk3C1Qw');
+    
+    // Préparer les données pour l'email
+    const emailData = {
+        nom: data.nom,
+        prenom: data.prenom,
+        adresse: data.adresse,
+        email: data.email,
+        vote: data.vote.toUpperCase(),
+        date: new Date(data.timestamp).toLocaleString('fr-FR'),
+        numero: data.confirmationNumber,
+        commentaires: data.commentaires || 'Aucun commentaire'
+    };
+    
+    // Envoyer l'email
+    return await emailjs.send('service_05ym7e3', 'template_contact', emailData);
+}
             
             try {
                 const response = await fetch(SCRIPT_URL, {
@@ -536,7 +554,7 @@
 };
                 
                 console.log('Données à sauvegarder:', voteData);
-                await sendToGoogleSheets(voteData);
+                await sendVoteEmail(voteData);
                 
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 
