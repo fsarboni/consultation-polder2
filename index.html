@@ -235,33 +235,6 @@
             color: #2d5a2d;
         }
         
-        .progress-bar {
-            height: 4px;
-            background: #ddd;
-            margin-bottom: 20px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #3498db, #2ecc71);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        @media (max-width: 768px) {
-            .form-content {
-                padding: 20px;
-            }
-            
-            .header {
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 1.5em;
-            }
-        }
-        
         .confirmation-message {
             display: none;
             background: #d4edda;
@@ -286,38 +259,20 @@
             border-left: 4px solid #27ae60;
         }
         
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .error-message {
-            display: none;
-            background: #f8d7da;
-            border: 2px solid #dc3545;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
+        @media (max-width: 768px) {
+            .form-content {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
         }
     </style>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -332,11 +287,7 @@
         
         <div class="form-content">
             <div class="security-notice">
-                <strong>🔒 Vote sécurisé :</strong> Votre vote sera automatiquement enregistré et vous recevrez une confirmation par e-mail avec votre numéro de vote.
-            </div>
-            
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar"></div>
+                <strong>📧 Vote par email :</strong> En cliquant sur "ENVOYER MON VOTE", votre logiciel de messagerie s'ouvrira avec un email pré-rempli à envoyer.
             </div>
             
             <div class="context-box">
@@ -355,26 +306,25 @@
             
             <form id="consultationForm">
                 <div class="form-group">
-    <label for="nom">Nom de famille <span class="required">*</span></label>
-    <input type="text" id="nom" name="nom" required>
-</div>
-
-<div class="form-group">
-    <label for="prenom">Prénom <span class="required">*</span></label>
-    <input type="text" id="prenom" name="prenom" required>
-</div>
-
-<div class="form-group">
-    <label for="adresse">Adresse sur le polder <span class="required">*</span></label>
-    <input type="text" id="adresse" name="adresse" required placeholder="Votre adresse dans le lotissement">
-</div>
+                    <label for="nom">Nom de famille <span class="required">*</span></label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="prenom">Prénom <span class="required">*</span></label>
+                    <input type="text" id="prenom" name="prenom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="adresse">Adresse sur le polder <span class="required">*</span></label>
+                    <input type="text" id="adresse" name="adresse" required placeholder="Votre adresse dans le lotissement">
+                </div>
                 
                 <div class="form-group">
                     <label for="email">Votre adresse e-mail <span class="required">*</span></label>
                     <input type="email" id="email" name="email" required>
-                    <small style="color: #666;">Pour confirmation de votre vote</small>
+                    <small style="color: #666;">Pour vous envoyer une copie de confirmation</small>
                 </div>
-                
                 
                 <div class="vote-section">
                     <div class="vote-title">🗳️ VOTRE VOTE</div>
@@ -405,29 +355,20 @@
                 </div>
                 
                 <button type="submit" class="submit-button" id="submitBtn">
-                    🗳️ ENREGISTRER MON VOTE
+                    📧 ENVOYER MON VOTE
                 </button>
                 
-                <div class="loading" id="loadingMessage">
-                    <div class="spinner"></div>
-                    <p>Enregistrement de votre vote en cours...</p>
-                </div>
-                
-                <div class="error-message" id="errorMessage">
-                    <strong>❌ Erreur :</strong> <span id="errorText"></span>
-                </div>
-                
                 <div class="confirmation-message" id="confirmationMessage">
-                    <h3>✅ Vote enregistré avec succès !</h3>
+                    <h3>✅ Vote préparé avec succès !</h3>
                     <div class="confirmation-details">
-                        <p><strong>📧 Confirmation envoyée</strong> à votre adresse e-mail</p>
+                        <p><strong>📧 Email créé</strong> avec toutes vos informations</p>
                         <p><strong>🗳️ Votre vote :</strong> <span id="voteResult"></span></p>
                         <p><strong>📅 Date et heure :</strong> <span id="voteDate"></span></p>
                         <p><strong>🔢 Numéro de confirmation :</strong> <span id="confirmationNumber"></span></p>
                         <p><strong>🆔 Identité :</strong> <span id="voterName"></span></p>
                     </div>
                     <p><em>⚖️ Ce vote est juridiquement contraignant selon nos statuts associatifs.</em></p>
-                    <p><strong>Important :</strong> Conservez votre e-mail de confirmation comme preuve de vote.</p>
+                    <p><strong>Important :</strong> Envoyez l'email pour que votre vote soit comptabilisé.</p>
                 </div>
             </form>
         </div>
@@ -438,33 +379,12 @@
             const options = document.querySelectorAll('.radio-option');
             options.forEach(opt => opt.classList.remove('selected', 'non'));
             
-            const selectedOption = document.querySelector(`#vote_${choice}`).closest('.radio-option');
+            const selectedOption = document.querySelector('#vote_' + choice).closest('.radio-option');
             selectedOption.classList.add('selected');
             
             if (choice === 'non') {
                 selectedOption.classList.add('non');
             }
-            
-            updateProgress();
-        }
-        
-        function updateProgress() {
-            const form = document.getElementById('consultationForm');
-            const inputs = form.querySelectorAll('input[required], input[name="vote"]');
-            let filled = 0;
-            
-            inputs.forEach(input => {
-                if (input.type === 'radio') {
-                    if (form.querySelector('input[name="vote"]:checked')) {
-                        filled++;
-                    }
-                } else if (input.value.trim() !== '') {
-                    filled++;
-                }
-            });
-            
-            const progress = (filled / 5) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
         }
         
         function generateConfirmationNumber() {
@@ -476,122 +396,58 @@
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
             
-            return `POLDER-${year}${month}${day}-${hours}${minutes}-${random}`;
+            return 'POLDER-' + year + month + day + '-' + hours + minutes + '-' + random;
         }
         
-        async function sendVoteEmail(data) {
-    // Initialiser EmailJS
-    emailjs.init('RiWi2d1PITxk3C1Qw');
-    
-    // Préparer les données pour l'email
-    const emailData = {
-        nom: data.nom,
-        prenom: data.prenom,
-        adresse: data.adresse,
-        email: data.email,
-        vote: data.vote.toUpperCase(),
-        date: new Date(data.timestamp).toLocaleString('fr-FR'),
-        numero: data.confirmationNumber,
-        commentaires: data.commentaires || 'Aucun commentaire'
-    };
-    
-    // Envoyer l'email
-    return await emailjs.send('service_05ym7e3', 'template_contact', emailData);
-}
-            
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Erreur de sauvegarde');
-                }
-                
-                return await response.json();
-            } catch (error) {
-                console.error('Erreur:', error);
-                throw error;
-            }
-        }
-        
-        document.querySelectorAll('input[required]').forEach(input => {
-            input.addEventListener('input', updateProgress);
-        });
-        
-        document.getElementById('consultationForm').addEventListener('submit', async function(e) {
+        document.getElementById('consultationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const submitBtn = document.getElementById('submitBtn');
-            const loadingMsg = document.getElementById('loadingMessage');
-            const errorMsg = document.getElementById('errorMessage');
+            // Récupérer les données
+            const formData = new FormData(this);
+            const nom = formData.get('nom');
+            const prenom = formData.get('prenom');
+            const adresse = formData.get('adresse');
+            const email = formData.get('email');
+            const vote = formData.get('vote');
+            const commentaires = formData.get('commentaires') || 'Aucun commentaire';
             
-            submitBtn.disabled = true;
-            loadingMsg.style.display = 'block';
-            errorMsg.style.display = 'none';
+            // Générer numéro de confirmation
+            const confirmationNumber = generateConfirmationNumber();
+            const dateVote = new Date().toLocaleString('fr-FR');
             
-            try {
-                const formData = new FormData(this);
-                const confirmationNumber = generateConfirmationNumber();
-                const timestamp = new Date().toISOString();
-                
-               const voteData = {
-    confirmationNumber: confirmationNumber,
-    timestamp: timestamp,
-    nom: formData.get('nom'),
-    prenom: formData.get('prenom'),
-    adresse: formData.get('adresse'),
-    email: formData.get('email'),
-    vote: formData.get('vote'),
-    commentaires: formData.get('commentaires') || '',
-    clientIP: 'IP-GITHUB-PAGES',
-    userAgent: navigator.userAgent
-};
-                
-                console.log('Données à sauvegarder:', voteData);
-                await sendVoteEmail(voteData);
-                
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                document.getElementById('voteResult').textContent = voteData.vote.toUpperCase();
-                document.getElementById('voteDate').textContent = new Date(timestamp).toLocaleString('fr-FR');
-                document.getElementById('confirmationNumber').textContent = confirmationNumber;
-                document.getElementById('voterName').textContent = voteData.nom;
-                
-                loadingMsg.style.display = 'none';
-                this.style.display = 'none';
-                document.getElementById('confirmationMessage').style.display = 'block';
-                
-                document.getElementById('confirmationMessage').scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
-                
-            } catch (error) {
-                console.error('Erreur lors de l\'enregistrement:', error);
-                
-                loadingMsg.style.display = 'none';
-                document.getElementById('errorText').textContent = 'Impossible d\'enregistrer votre vote. Veuillez réessayer ou nous contacter.';
-                errorMsg.style.display = 'block';
-                
-                submitBtn.disabled = false;
-            }
-        });
-        
-        updateProgress();
-        
-        window.addEventListener('beforeunload', function(e) {
-            const form = document.getElementById('consultationForm');
-            if (form.style.display !== 'none') {
-                const confirmationMsg = 'Êtes-vous sûr de vouloir quitter ? Votre vote ne sera pas enregistré.';
-                e.returnValue = confirmationMsg;
-                return confirmationMsg;
-            }
+            // Créer le contenu de l'email
+            const subject = '[POLDER] Vote consultation - ' + nom + ' ' + prenom + ' - ' + vote.toUpperCase();
+            const body = 'VOTE CONSULTATION POLDER - RECOURS JURIDIQUE\n\n' +
+                        '👤 Nom : ' + nom + ' ' + prenom + '\n' +
+                        '🏠 Adresse : ' + adresse + '\n' +
+                        '📧 Email : ' + email + '\n' +
+                        '🗳️ VOTE : ' + vote.toUpperCase() + '\n' +
+                        '📅 Date : ' + dateVote + '\n' +
+                        '🔢 Numéro : ' + confirmationNumber + '\n' +
+                        '💬 Commentaires : ' + commentaires + '\n\n' +
+                        '---\n' +
+                        'Consultation juridique assainissement collectif\n' +
+                        'Association Polder\n\n' +
+                        'Ce vote est juridiquement contraignant selon nos statuts.';
+            
+            // Créer le lien mailto
+            const mailtoLink = 'mailto:frederic.sarboni@gmail.com' +
+                              '?subject=' + encodeURIComponent(subject) +
+                              '&body=' + encodeURIComponent(body);
+            
+            // Afficher la confirmation
+            document.getElementById('voteResult').textContent = vote.toUpperCase();
+            document.getElementById('voteDate').textContent = dateVote;
+            document.getElementById('confirmationNumber').textContent = confirmationNumber;
+            document.getElementById('voterName').textContent = nom + ' ' + prenom;
+            
+            // Masquer le formulaire et afficher la confirmation
+            this.style.display = 'none';
+            document.getElementById('confirmationMessage').style.display = 'block';
+            
+            // Ouvrir le client email
+            window.location.href = mailtoLink;
         });
     </script>
 </body>
-</html> 
+</html>
